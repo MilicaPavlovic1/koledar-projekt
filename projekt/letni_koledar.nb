@@ -1,0 +1,779 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     34672,        771]
+NotebookOptionsPosition[     34150,        753]
+NotebookOutlinePosition[     34579,        770]
+CellTagsIndexPosition[     34536,        767]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"Module", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "velikaNoc", ",", "prazniki", ",", "imenaMesecev", ",", "imenaDni", ",", 
+     "stDniUGodini", ",", "mesecGrid", ",", "koledarAplikacija"}], "}"}], ",", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"velikaNoc", "[", "leto_Integer", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "a", ",", "b", ",", "c", ",", "d", ",", "e", ",", "f", ",", "g", ",", 
+         "h", ",", "i", ",", "k", ",", "l", ",", "m", ",", "mesec", ",", 
+         "dan"}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"a", "=", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"leto", ",", "19"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"b", "=", 
+         RowBox[{"Quotient", "[", 
+          RowBox[{"leto", ",", "100"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"c", "=", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"leto", ",", "100"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"d", "=", 
+         RowBox[{"Quotient", "[", 
+          RowBox[{"b", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"e", "=", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"b", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"f", "=", 
+         RowBox[{"Quotient", "[", 
+          RowBox[{
+           RowBox[{"b", "+", "8"}], ",", "25"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"g", "=", 
+         RowBox[{"Quotient", "[", 
+          RowBox[{
+           RowBox[{"b", "-", "f", "+", "1"}], ",", "3"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"h", "=", 
+         RowBox[{"Mod", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"19", " ", "a"}], "+", "b", "-", "d", "-", "g", "+", 
+            "15"}], ",", "30"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"i", "=", 
+         RowBox[{"Quotient", "[", 
+          RowBox[{"c", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"k", "=", 
+         RowBox[{"Mod", "[", 
+          RowBox[{"c", ",", "4"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"l", "=", 
+         RowBox[{"Mod", "[", 
+          RowBox[{
+           RowBox[{"32", "+", 
+            RowBox[{"2", " ", "e"}], "+", 
+            RowBox[{"2", " ", "i"}], "-", "h", "-", "k"}], ",", "7"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"m", "=", 
+         RowBox[{"Quotient", "[", 
+          RowBox[{
+           RowBox[{"a", "+", 
+            RowBox[{"11", " ", "h"}], "+", 
+            RowBox[{"22", " ", "l"}]}], ",", "451"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"mesec", "=", 
+         RowBox[{"Quotient", "[", 
+          RowBox[{
+           RowBox[{"h", "+", "l", "-", 
+            RowBox[{"7", " ", "m"}], "+", "114"}], ",", "31"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"dan", "=", 
+         RowBox[{
+          RowBox[{"Mod", "[", 
+           RowBox[{
+            RowBox[{"h", "+", "l", "-", 
+             RowBox[{"7", " ", "m"}], "+", "114"}], ",", "31"}], "]"}], "+", 
+          "1"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"DateObject", "[", 
+         RowBox[{"{", 
+          RowBox[{"leto", ",", "mesec", ",", "dan"}], "}"}], "]"}]}]}], 
+      "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"dneviPo", "[", 
+      RowBox[{"datum_", ",", "n_Integer"}], "]"}], ":=", 
+     RowBox[{"DatePlus", "[", 
+      RowBox[{"datum", ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"kljuc", "[", "datum_", "]"}], ":=", 
+     RowBox[{"DateValue", "[", 
+      RowBox[{"datum", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<Year\>\"", ",", "\"\<Month\>\"", ",", "\"\<Day\>\""}], 
+        "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"prazniki", "[", "leto_Integer", "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"vn", "=", 
+         RowBox[{"velikaNoc", "[", "leto", "]"}]}], "}"}], ",", 
+       RowBox[{"Association", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "1", ",", "1"}], "}"}], 
+          "->", "\"\<Novo leto\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "1", ",", "2"}], "}"}], 
+          "->", "\"\<Novo leto (2. dan)\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "2", ",", "8"}], "}"}], 
+          "->", "\"\<Pre\[SHacek]ernov dan\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "3", ",", "8"}], "}"}], 
+          "->", "\"\<Dan \[ZHacek]ena\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "4", ",", "27"}], "}"}], 
+          "->", "\"\<Dan upora proti okupatorju\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "5", ",", "1"}], "}"}], 
+          "->", "\"\<Praznik dela\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "5", ",", "2"}], "}"}], 
+          "->", "\"\<Praznik dela (2. dan)\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "6", ",", "25"}], "}"}], 
+          "->", "\"\<Dan dr\[ZHacek]avnosti\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "8", ",", "15"}], "}"}], 
+          "->", "\"\<Marijino vnebovzetje\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "10", ",", "31"}], "}"}], 
+          "->", "\"\<Dan reformacije\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "11", ",", "1"}], "}"}], 
+          "->", "\"\<Dan spomina na mrtve\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "12", ",", "24"}], "}"}], 
+          "->", "\"\<Sveti ve\[CHacek]er\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "12", ",", "25"}], "}"}], 
+          "->", "\"\<Bo\[ZHacek]i\[CHacek]\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "12", ",", "26"}], "}"}], 
+          "->", "\"\<Dan samostojnosti in enotnosti\>\""}], ",", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"leto", ",", "12", ",", "31"}], "}"}], 
+          "->", "\"\<Silvestrovo\>\""}], ",", 
+         RowBox[{
+          RowBox[{"kljuc", "[", "vn", "]"}], 
+          "->", "\"\<Velika no\[CHacek]\>\""}], ",", 
+         RowBox[{
+          RowBox[{"kljuc", "[", 
+           RowBox[{"dneviPo", "[", 
+            RowBox[{"vn", ",", "1"}], "]"}], "]"}], 
+          "->", "\"\<Velikono\[CHacek]ni ponedeljek\>\""}], ",", 
+         RowBox[{
+          RowBox[{"kljuc", "[", 
+           RowBox[{"dneviPo", "[", 
+            RowBox[{"vn", ",", "49"}], "]"}], "]"}], 
+          "->", "\"\<Binko\[SHacek]ti\>\""}], ",", 
+         RowBox[{
+          RowBox[{"kljuc", "[", 
+           RowBox[{"dneviPo", "[", 
+            RowBox[{"vn", ",", 
+             RowBox[{"-", "47"}]}], "]"}], "]"}], 
+          "->", "\"\<Pustni torek\>\""}]}], "]"}]}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"imenaMesecev", "=", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Januar\>\"", ",", "\"\<Februar\>\"", ",", "\"\<Marec\>\"", 
+       ",", "\"\<April\>\"", ",", "\"\<Maj\>\"", ",", "\"\<Junij\>\"", 
+       ",", "\"\<Julij\>\"", ",", "\"\<Avgust\>\"", ",", "\"\<September\>\"", 
+       ",", "\"\<Oktober\>\"", ",", "\"\<November\>\"", 
+       ",", "\"\<December\>\""}], "}"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"imenaDni", "=", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Pon\>\"", ",", "\"\<Tor\>\"", ",", "\"\<Sre\>\"", 
+       ",", "\"\<\[CapitalCHacek]et\>\"", ",", "\"\<Pet\>\"", 
+       ",", "\"\<Sob\>\"", ",", "\"\<Ned\>\""}], "}"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+     "Pouzdan", " ", "na\[CHacek]in", " ", "za", " ", "dobijanje", " ", 
+      "broja", " ", "dana", " ", "u", " ", "mesecu"}], "*)"}], 
+    RowBox[{
+     RowBox[{"stDniUGodini", "[", 
+      RowBox[{"leto_", ",", "mesec_"}], "]"}], ":=", 
+     RowBox[{"Switch", "[", 
+      RowBox[{"mesec", ",", "2", ",", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"LeapYearQ", "[", "leto", "]"}], ",", "29", ",", "28"}], 
+        "]"}], ",", 
+       RowBox[{"4", "|", "6", "|", "9", "|", "11"}], ",", "30", ",", "_", ",",
+        "31"}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"mesecGrid", "[", 
+      RowBox[{"leto_Integer", ",", "mesec_Integer", ",", "oznaceni_List"}], 
+      "]"}], ":=", 
+     RowBox[{"Module", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"p", "=", 
+          RowBox[{"prazniki", "[", "leto", "]"}]}], ",", "stDni", ",", 
+         "prviDan", ",", "celice", ",", "vrstice"}], "}"}], ",", 
+       RowBox[{
+        RowBox[{"stDni", "=", 
+         RowBox[{"stDniUGodini", "[", 
+          RowBox[{"leto", ",", "mesec"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"prviDan", "=", 
+         RowBox[{"Mod", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"DateValue", "[", 
+             RowBox[{
+              RowBox[{"DateObject", "[", 
+               RowBox[{"{", 
+                RowBox[{"leto", ",", "mesec", ",", "1"}], "}"}], "]"}], 
+              ",", "\"\<ISOWeekDay\>\""}], "]"}], "-", "1"}], ",", "7"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"celice", "=", 
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"\"\<\>\"", ",", "prviDan"}], "]"}], ",", 
+           RowBox[{"Table", "[", 
+            RowBox[{
+             RowBox[{"Module", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                "jePraznik", ",", "jeOznacen", ",", "dow", ",", "txtColor", ",",
+                  "bgCol"}], "}"}], ",", 
+               RowBox[{
+                RowBox[{"jePraznik", "=", 
+                 RowBox[{"KeyExistsQ", "[", 
+                  RowBox[{"p", ",", 
+                   RowBox[{"{", 
+                    RowBox[{"leto", ",", "mesec", ",", "d"}], "}"}]}], 
+                  "]"}]}], ";", "\[IndentingNewLine]", 
+                RowBox[{"jeOznacen", "=", 
+                 RowBox[{"MemberQ", "[", 
+                  RowBox[{"oznaceni", ",", 
+                   RowBox[{"{", 
+                    RowBox[{"leto", ",", "mesec", ",", "d"}], "}"}]}], 
+                  "]"}]}], ";", "\[IndentingNewLine]", 
+                RowBox[{"dow", "=", 
+                 RowBox[{"DateValue", "[", 
+                  RowBox[{
+                   RowBox[{"DateObject", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"leto", ",", "mesec", ",", "d"}], "}"}], "]"}], 
+                   ",", "\"\<DayName\>\""}], "]"}]}], ";", 
+                "\[IndentingNewLine]", 
+                RowBox[{"txtColor", "=", 
+                 RowBox[{"Which", "[", 
+                  RowBox[{"jeOznacen", ",", "White", ",", "jePraznik", ",", 
+                   RowBox[{"RGBColor", "[", 
+                    RowBox[{"0.8", ",", "0.2", ",", "0.1"}], "]"}], ",", 
+                   RowBox[{"MemberQ", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"Saturday", ",", "Sunday"}], "}"}], ",", "dow"}], 
+                    "]"}], ",", 
+                   RowBox[{"GrayLevel", "[", "0.4", "]"}], ",", "True", ",", 
+                   "Black"}], "]"}]}], ";", "\[IndentingNewLine]", 
+                RowBox[{"bgCol", "=", 
+                 RowBox[{"Which", "[", 
+                  RowBox[{"jeOznacen", ",", 
+                   RowBox[{"RGBColor", "[", 
+                    RowBox[{"0.1", ",", "0.4", ",", "0.5"}], "]"}], ",", 
+                   "jePraznik", ",", 
+                   RowBox[{"RGBColor", "[", 
+                    RowBox[{"1", ",", "0.9", ",", "0.88"}], "]"}], ",", 
+                   "True", ",", "None"}], "]"}]}], ";", "\[IndentingNewLine]", 
+                RowBox[{"Tooltip", "[", 
+                 RowBox[{
+                  RowBox[{"Item", "[", 
+                   RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"d", ",", "txtColor", ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"jePraznik", "||", "jeOznacen"}], ",", "Bold", ",",
+                     "Plain"}], "]"}], ",", "10"}], "]"}], ",", 
+                    RowBox[{"Background", "->", "bgCol"}], ",", 
+                    RowBox[{"ItemSize", "->", 
+                    RowBox[{"{", 
+                    RowBox[{"1.8", ",", "1.2"}], "}"}]}]}], "]"}], ",", 
+                  RowBox[{"StringJoin", "[", 
+                   RowBox[{
+                    RowBox[{"ToString", "[", "d", "]"}], ",", "\"\<. \>\"", ",", 
+                    RowBox[{"imenaMesecev", "[", 
+                    RowBox[{"[", "mesec", "]"}], "]"}], ",", "\"\< \>\"", ",", 
+                    RowBox[{"ToString", "[", "leto", "]"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{"jePraznik", ",", 
+                    RowBox[{"\"\< - \>\"", "<>", 
+                    RowBox[{"p", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"leto", ",", "mesec", ",", "d"}], "}"}], "]"}]}], 
+                    ",", "\"\<\>\""}], "]"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    "jeOznacen", ",", "\"\< - Poseben dan\>\"", 
+                    ",", "\"\<\>\""}], "]"}]}], "]"}]}], "]"}]}]}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"d", ",", "1", ",", "stDni"}], "}"}]}], "]"}]}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"celice", "=", 
+         RowBox[{"Join", "[", 
+          RowBox[{"celice", ",", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{"\"\<\>\"", ",", 
+             RowBox[{"Mod", "[", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"Length", "[", "celice", "]"}]}], ",", "7"}], "]"}]}],
+             "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"vrstice", "=", 
+         RowBox[{"Partition", "[", 
+          RowBox[{"celice", ",", "7"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"Column", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Style", "[", 
+             RowBox[{
+              RowBox[{"imenaMesecev", "[", 
+               RowBox[{"[", "mesec", "]"}], "]"}], ",", "Bold", ",", "12", ",", 
+              RowBox[{"FontFamily", "->", "\"\<Helvetica\>\""}]}], "]"}], ",", 
+            RowBox[{"Grid", "[", 
+             RowBox[{
+              RowBox[{"Prepend", "[", 
+               RowBox[{"vrstice", ",", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Style", "[", 
+                   RowBox[{"#", ",", 
+                    RowBox[{"GrayLevel", "[", "0.6", "]"}], ",", "8"}], "]"}],
+                   "&"}], "/@", "imenaDni"}]}], "]"}], ",", 
+              RowBox[{"Frame", "->", "All"}], ",", 
+              RowBox[{"FrameStyle", "->", 
+               RowBox[{"GrayLevel", "[", "0.85", "]"}]}], ",", 
+              RowBox[{"Alignment", "->", "Center"}], ",", 
+              RowBox[{"Spacings", "->", 
+               RowBox[{"{", 
+                RowBox[{"0.4", ",", "0.25"}], "}"}]}]}], "]"}]}], "}"}], ",", 
+          RowBox[{"Alignment", "->", "Center"}], ",", 
+          RowBox[{"Spacings", "->", "0.2"}]}], "]"}]}]}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"koledarAplikacija", "[", "]"}], ":=", 
+     RowBox[{"DynamicModule", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"oznaceni", "=", 
+          RowBox[{"{", "}"}]}], ",", 
+         RowBox[{"izbraniDatum", "=", 
+          RowBox[{"DateObject", "[", 
+           RowBox[{"{", 
+            RowBox[{"2026", ",", "1", ",", "1"}], "}"}], "]"}]}]}], "}"}], ",", 
+       RowBox[{"Manipulate", "[", 
+        RowBox[{
+         RowBox[{"Column", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Style", "[", 
+              RowBox[{
+               RowBox[{"\"\<Interaktivni letni koledar: \>\"", "<>", 
+                RowBox[{"ToString", "[", "leto", "]"}]}], ",", "Bold", ",", 
+               "18", ",", 
+               RowBox[{"FontFamily", "->", "\"\<Helvetica\>\""}]}], "]"}], ",", 
+             RowBox[{"Spacer", "[", "3", "]"}], ",", 
+             RowBox[{"Grid", "[", 
+              RowBox[{
+               RowBox[{"Partition", "[", 
+                RowBox[{
+                 RowBox[{"Table", "[", 
+                  RowBox[{
+                   RowBox[{"mesecGrid", "[", 
+                    RowBox[{"leto", ",", "m", ",", "oznaceni"}], "]"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{"m", ",", "1", ",", "12"}], "}"}]}], "]"}], ",", 
+                 "stolpci", ",", "stolpci", ",", "1", ",", "\"\<\>\""}], 
+                "]"}], ",", 
+               RowBox[{"Spacings", "->", 
+                RowBox[{"{", 
+                 RowBox[{"0.8", ",", "0.8"}], "}"}]}]}], "]"}], ",", 
+             RowBox[{"Spacer", "[", "5", "]"}], ",", 
+             RowBox[{"Style", "[", 
+              
+              RowBox[{"\"\<Seznam praznikov za izbrano leto:\>\"", ",", 
+               "Bold", ",", "10"}], "]"}], ",", 
+             RowBox[{"Pane", "[", 
+              RowBox[{
+               RowBox[{"Column", "[", 
+                RowBox[{"KeyValueMap", "[", 
+                 RowBox[{
+                  RowBox[{
+                   RowBox[{"Style", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"ToString", "[", 
+                    RowBox[{"#1", "[", 
+                    RowBox[{"[", "3", "]"}], "]"}], "]"}], "<>", "\"\<. \>\"",
+                     "<>", 
+                    RowBox[{"imenaMesecev", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"#1", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}], "]"}], "]"}], 
+                    "<>", "\"\< - \>\"", "<>", "#2"}], ",", "9"}], "]"}], 
+                   "&"}], ",", 
+                  RowBox[{"KeySort", "[", 
+                   RowBox[{"prazniki", "[", "leto", "]"}], "]"}]}], "]"}], 
+                "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"Full", ",", "100"}], "}"}], ",", 
+               RowBox[{"Scrollbars", "->", "True"}]}], "]"}]}], "}"}], ",", 
+           RowBox[{"Alignment", "->", "Center"}], ",", 
+           RowBox[{"Spacings", "->", "0.3"}]}], "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"leto", ",", "2000", ",", "2100", ",", "1", ",", 
+           RowBox[{"Appearance", "->", "\"\<Labeled\>\""}], ",", 
+           RowBox[{"ControlType", "->", "InputField"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"stolpci", ",", 
+           RowBox[{"{", 
+            RowBox[{"3", ",", "4", ",", "6"}], "}"}]}], "}"}], ",", 
+         "Delimiter", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "izbraniDatum", ",", "\"\<Izberi datum za ozna\[CHacek]itev\>\""}], 
+          "}"}], ",", 
+         RowBox[{"Button", "[", 
+          RowBox[{"\"\<Ozna\[CHacek]i dan\>\"", ",", 
+           RowBox[{"oznaceni", "=", 
+            RowBox[{"Union", "[", 
+             RowBox[{"Append", "[", 
+              RowBox[{"oznaceni", ",", 
+               RowBox[{"DateValue", "[", 
+                RowBox[{"izbraniDatum", ",", 
+                 RowBox[{"{", 
+                  
+                  RowBox[{"\"\<Year\>\"", ",", "\"\<Month\>\"", 
+                   ",", "\"\<Day\>\""}], "}"}]}], "]"}]}], "]"}], "]"}]}]}], 
+          "]"}], ",", 
+         RowBox[{"Button", "[", 
+          RowBox[{"\"\<Po\[CHacek]isti oznake\>\"", ",", 
+           RowBox[{"oznaceni", "=", 
+            RowBox[{"{", "}"}]}]}], "]"}], ",", 
+         RowBox[{"ControlPlacement", "->", "Top"}], ",", 
+         RowBox[{"SaveDefinitions", "->", "True"}]}], "]"}]}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"koledarAplikacija", "[", "]"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.9962999692936134`*^9, 3.9962999692936134`*^9}, 
+   3.9963000390264664`*^9, 3.996300098173811*^9, 3.9963001588320827`*^9, 
+   3.99673068013945*^9},
+ CellLabel->"In[1]:=",ExpressionUUID->"c04f8eb5-5d76-8740-8f36-16f6e86e57f6"],
+
+Cell[BoxData[
+ DynamicModuleBox[{$CellContext`oznaceni$$ = {}, $CellContext`izbraniDatum$$ =
+   DateObject[{2026, 1, 1}, "Day"]}, 
+  TagBox[
+   StyleBox[
+    DynamicModuleBox[{$CellContext`izbraniDatum$$ = 
+     "Izberi datum za ozna\[CHacek]itev", $CellContext`leto$$ = 
+     2000, $CellContext`stolpci$$ = 3, Typeset`show$$ = True, 
+     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+     "\"untitled\"", Typeset`specs$$ = {{
+       Hold[$CellContext`leto$$], 2000, 2100, 1, ControlType -> InputField}, {
+       Hold[$CellContext`stolpci$$], {3, 4, 6}, ControlType -> SetterBar}, {
+       Hold[$CellContext`izbraniDatum$$], "Izberi datum za ozna\[CHacek]itev",
+        ControlType -> InputField}, {
+       Hold[
+        Button["Ozna\[CHacek]i dan", $CellContext`oznaceni$$ = Union[
+           Append[$CellContext`oznaceni$$, 
+            
+            DateValue[$CellContext`izbraniDatum$$, {
+             "Year", "Month", "Day"}]]]]], Manipulate`Dump`ThisIsNotAControl, 
+       ControlType -> None}, {
+       Hold[
+        Button["Po\[CHacek]isti oznake", $CellContext`oznaceni$$ = {}]], 
+       Manipulate`Dump`ThisIsNotAControl, ControlType -> None}}, 
+     Typeset`size$$ = {984.32, {328.71576573820784`, 334.447699163761}}, 
+     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = False,
+      Typeset`keyframeActionsQ$$ = False, Typeset`keyframeList$$ = {}}, 
+     DynamicBox[Manipulate`ManipulateBoxes[
+      1, StandardForm, 
+       "Variables" :> {$CellContext`izbraniDatum$$ = 
+         "Izberi datum za ozna\[CHacek]itev", $CellContext`leto$$ = 
+         2000, $CellContext`stolpci$$ = 3}, "ControllerVariables" :> {}, 
+       "OtherVariables" :> {
+        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+         Typeset`specs$$, Typeset`size$$, Typeset`update$$, 
+         Typeset`initDone$$, Typeset`skipInitDone$$, 
+         Typeset`keyframeActionsQ$$, Typeset`keyframeList$$}, "Body" :> 
+       Column[{
+          Style[
+          "Interaktivni letni koledar: " <> ToString[$CellContext`leto$$], 
+           Bold, 18, FontFamily -> "Helvetica"], 
+          Spacer[3], 
+          Grid[
+           Partition[
+            Table[
+             $CellContext`mesecGrid$42705[$CellContext`leto$$, \
+$CellContext`m, $CellContext`oznaceni$$], {$CellContext`m, 1, 
+              12}], $CellContext`stolpci$$, $CellContext`stolpci$$, 1, ""], 
+           Spacings -> {0.8, 0.8}], 
+          Spacer[5], 
+          Style["Seznam praznikov za izbrano leto:", Bold, 10], 
+          Pane[
+           Column[
+            KeyValueMap[Style[ToString[
+                Part[#, 3]] <> ". " <> Part[$CellContext`imenaMesecev$42705, 
+                Part[#, 2]] <> " - " <> #2, 9]& , 
+             KeySort[
+              $CellContext`prazniki$42705[$CellContext`leto$$]]]], {
+           Full, 100}, Scrollbars -> True]}, Alignment -> Center, Spacings -> 
+         0.3], "Specifications" :> {{$CellContext`leto$$, 2000, 2100, 1, 
+          Appearance -> "Labeled", ControlType -> 
+          InputField}, {$CellContext`stolpci$$, {3, 4, 6}}, 
+         Delimiter, {$CellContext`izbraniDatum$$, 
+          "Izberi datum za ozna\[CHacek]itev"}, 
+         Button["Ozna\[CHacek]i dan", $CellContext`oznaceni$$ = Union[
+            Append[$CellContext`oznaceni$$, 
+             
+             DateValue[$CellContext`izbraniDatum$$, {
+              "Year", "Month", "Day"}]]]], 
+         Button["Po\[CHacek]isti oznake", $CellContext`oznaceni$$ = {}]}, 
+       "Options" :> {ControlPlacement -> Top}, "DefaultOptions" :> {}],
+      ImageSizeCache->{1026.92, {427.85844151945787`, 433.59037494501104`}},
+      SingleEvaluation->True],
+     Deinitialization:>None,
+     DynamicModuleValues:>{},
+     Initialization:>({
+       Attributes[$CellContext`mesecGrid$42705] = {
+         Temporary}, $CellContext`mesecGrid$42705[
+          Pattern[$CellContext`leto$, 
+           Blank[Integer]], 
+          Pattern[$CellContext`mesec$, 
+           Blank[Integer]], 
+          Pattern[$CellContext`oznaceni$, 
+           Blank[List]]] := 
+        Module[{$CellContext`p$ = \
+$CellContext`prazniki$42705[$CellContext`leto$], $CellContext`stDni$, \
+$CellContext`prviDan$, $CellContext`celice$, $CellContext`vrstice$}, \
+$CellContext`stDni$ = $CellContext`stDniUGodini$42705[$CellContext`leto$, \
+$CellContext`mesec$]; $CellContext`prviDan$ = Mod[DateValue[
+               DateObject[{$CellContext`leto$, $CellContext`mesec$, 1}], 
+               "ISOWeekDay"] - 1, 7]; $CellContext`celice$ = Join[
+             ConstantArray["", $CellContext`prviDan$], 
+             Table[
+              
+              Module[{$CellContext`jePraznik$, $CellContext`jeOznacen$, \
+$CellContext`dow$, $CellContext`txtColor$, $CellContext`bgCol$}, \
+$CellContext`jePraznik$ = 
+                KeyExistsQ[$CellContext`p$, {$CellContext`leto$, \
+$CellContext`mesec$, $CellContext`d}]; $CellContext`jeOznacen$ = 
+                MemberQ[$CellContext`oznaceni$, {$CellContext`leto$, \
+$CellContext`mesec$, $CellContext`d}]; $CellContext`dow$ = DateValue[
+                  
+                  DateObject[{$CellContext`leto$, $CellContext`mesec$, \
+$CellContext`d}], "DayName"]; $CellContext`txtColor$ = 
+                Which[$CellContext`jeOznacen$, White, $CellContext`jePraznik$, 
+                  RGBColor[0.8, 0.2, 0.1], 
+                  MemberQ[{Saturday, Sunday}, $CellContext`dow$], 
+                  GrayLevel[0.4], True, Black]; $CellContext`bgCol$ = 
+                Which[$CellContext`jeOznacen$, 
+                  RGBColor[0.1, 0.4, 0.5], $CellContext`jePraznik$, 
+                  RGBColor[1, 0.9, 0.88], True, None]; Tooltip[
+                 Item[
+                  Style[$CellContext`d, $CellContext`txtColor$, 
+                   If[
+                    Or[$CellContext`jePraznik$, $CellContext`jeOznacen$], 
+                    Bold, Plain], 10], Background -> $CellContext`bgCol$, 
+                  ItemSize -> {1.8, 1.2}], ToString[$CellContext`d] <> ". " <> 
+                 Part[$CellContext`imenaMesecev$42705, $CellContext`mesec$] <> 
+                 " " <> ToString[$CellContext`leto$] <> 
+                 If[$CellContext`jePraznik$, 
+                   " - " <> $CellContext`p$[{$CellContext`leto$, \
+$CellContext`mesec$, $CellContext`d}], ""] <> 
+                 If[$CellContext`jeOznacen$, " - Poseben dan", 
+                   ""]]], {$CellContext`d, 
+               1, $CellContext`stDni$}]]; $CellContext`celice$ = 
+           Join[$CellContext`celice$, 
+             ConstantArray["", 
+              Mod[-Length[$CellContext`celice$], 7]]]; $CellContext`vrstice$ = 
+           Partition[$CellContext`celice$, 7]; Column[{
+             Style[
+              Part[$CellContext`imenaMesecev$42705, $CellContext`mesec$], 
+              Bold, 12, FontFamily -> "Helvetica"], 
+             Grid[
+              Prepend[$CellContext`vrstice$, 
+               Map[Style[#, 
+                 GrayLevel[0.6], 8]& , $CellContext`imenaDni$42705]], Frame -> 
+              All, FrameStyle -> GrayLevel[0.85], Alignment -> Center, 
+              Spacings -> {0.4, 0.25}]}, Alignment -> Center, Spacings -> 
+            0.2]], Attributes[$CellContext`leto$] = {Temporary}, 
+        Attributes[$CellContext`mesec$] = {Temporary}, 
+        Attributes[$CellContext`oznaceni$] = {Temporary}, 
+        Attributes[$CellContext`p$] = {Temporary}, 
+        Attributes[$CellContext`prazniki$42705] = {
+         Temporary}, $CellContext`prazniki$42705[
+          Pattern[$CellContext`leto$, 
+           Blank[Integer]]] := 
+        Module[{$CellContext`vn$ = \
+$CellContext`velikaNoc$42705[$CellContext`leto$]}, <|{$CellContext`leto$, 1, 
+             1} -> "Novo leto", {$CellContext`leto$, 1, 2} -> 
+           "Novo leto (2. dan)", {$CellContext`leto$, 2, 8} -> 
+           "Pre\[SHacek]ernov dan", {$CellContext`leto$, 3, 8} -> 
+           "Dan \[ZHacek]ena", {$CellContext`leto$, 4, 27} -> 
+           "Dan upora proti okupatorju", {$CellContext`leto$, 5, 1} -> 
+           "Praznik dela", {$CellContext`leto$, 5, 2} -> 
+           "Praznik dela (2. dan)", {$CellContext`leto$, 6, 25} -> 
+           "Dan dr\[ZHacek]avnosti", {$CellContext`leto$, 8, 15} -> 
+           "Marijino vnebovzetje", {$CellContext`leto$, 10, 31} -> 
+           "Dan reformacije", {$CellContext`leto$, 11, 1} -> 
+           "Dan spomina na mrtve", {$CellContext`leto$, 12, 24} -> 
+           "Sveti ve\[CHacek]er", {$CellContext`leto$, 12, 25} -> 
+           "Bo\[ZHacek]i\[CHacek]", {$CellContext`leto$, 12, 26} -> 
+           "Dan samostojnosti in enotnosti", {$CellContext`leto$, 12, 31} -> 
+           "Silvestrovo", $CellContext`kljuc[$CellContext`vn$] -> 
+           "Velika no\[CHacek]", $CellContext`kljuc[
+             $CellContext`dneviPo[$CellContext`vn$, 1]] -> 
+           "Velikono\[CHacek]ni ponedeljek", $CellContext`kljuc[
+             $CellContext`dneviPo[$CellContext`vn$, 49]] -> 
+           "Binko\[SHacek]ti", $CellContext`kljuc[
+             $CellContext`dneviPo[$CellContext`vn$, -47]] -> 
+           "Pustni torek"|>], Attributes[$CellContext`vn$] = {Temporary}, 
+        Attributes[$CellContext`velikaNoc$42705] = {
+         Temporary}, $CellContext`velikaNoc$42705[
+          Pattern[$CellContext`leto, 
+           Blank[Integer]]] := 
+        Module[{$CellContext`a, $CellContext`b, $CellContext`c, \
+$CellContext`d, $CellContext`e, $CellContext`f, $CellContext`g, \
+$CellContext`h, $CellContext`i, $CellContext`k, $CellContext`l, \
+$CellContext`m, $CellContext`mesec, $CellContext`dan}, $CellContext`a = 
+           Mod[$CellContext`leto, 19]; $CellContext`b = 
+           Quotient[$CellContext`leto, 100]; $CellContext`c = 
+           Mod[$CellContext`leto, 100]; $CellContext`d = 
+           Quotient[$CellContext`b, 4]; $CellContext`e = 
+           Mod[$CellContext`b, 4]; $CellContext`f = 
+           Quotient[$CellContext`b + 8, 25]; $CellContext`g = 
+           Quotient[$CellContext`b - $CellContext`f + 1, 3]; $CellContext`h = 
+           Mod[19 $CellContext`a + $CellContext`b - $CellContext`d - \
+$CellContext`g + 15, 30]; $CellContext`i = 
+           Quotient[$CellContext`c, 4]; $CellContext`k = 
+           Mod[$CellContext`c, 4]; $CellContext`l = 
+           Mod[32 + 2 $CellContext`e + 
+             2 $CellContext`i - $CellContext`h - $CellContext`k, 
+             7]; $CellContext`m = 
+           Quotient[$CellContext`a + 11 $CellContext`h + 22 $CellContext`l, 
+             451]; $CellContext`mesec = 
+           Quotient[$CellContext`h + $CellContext`l - 7 $CellContext`m + 114, 
+             31]; $CellContext`dan = 
+           Mod[$CellContext`h + $CellContext`l - 7 $CellContext`m + 114, 31] + 
+            1; DateObject[{$CellContext`leto, $CellContext`mesec, \
+$CellContext`dan}]], $CellContext`kljuc[
+          Pattern[$CellContext`datum, 
+           Blank[]]] := 
+        DateValue[$CellContext`datum, {
+          "Year", "Month", "Day"}], $CellContext`dneviPo[
+          Pattern[$CellContext`datum, 
+           Blank[]], 
+          Pattern[$CellContext`n, 
+           Blank[Integer]]] := DatePlus[$CellContext`datum, $CellContext`n], 
+        Attributes[$CellContext`stDni$] = {Temporary}, 
+        Attributes[$CellContext`prviDan$] = {Temporary}, 
+        Attributes[$CellContext`celice$] = {Temporary}, 
+        Attributes[$CellContext`vrstice$] = {Temporary}, 
+        Attributes[$CellContext`stDniUGodini$42705] = {
+         Temporary}, $CellContext`stDniUGodini$42705[
+          Pattern[$CellContext`leto, 
+           Blank[]], 
+          Pattern[$CellContext`mesec, 
+           Blank[]]] := Switch[$CellContext`mesec, 2, 
+          If[
+           LeapYearQ[$CellContext`leto], 29, 28], 
+          Alternatives[4, 6, 9, 11], 30, 
+          Blank[], 31], Attributes[$CellContext`jePraznik$] = {Temporary}, 
+        Attributes[$CellContext`jeOznacen$] = {Temporary}, 
+        Attributes[$CellContext`dow$] = {Temporary}, 
+        Attributes[$CellContext`txtColor$] = {Temporary}, 
+        Attributes[$CellContext`bgCol$] = {Temporary}, 
+        Attributes[$CellContext`imenaMesecev$42705] = {
+         Temporary}, $CellContext`imenaMesecev$42705 = {
+         "Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", 
+          "Avgust", "September", "Oktober", "November", "December"}, 
+        Attributes[$CellContext`imenaDni$42705] = {
+         Temporary}, $CellContext`imenaDni$42705 = {
+         "Pon", "Tor", "Sre", "\[CapitalCHacek]et", "Pet", "Sob", "Ned"}}; 
+      Typeset`initDone$$ = True),
+     SynchronousInitialization->True,
+     UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+     UnsavedVariables:>{Typeset`initDone$$},
+     UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+    Deployed->True,
+    StripOnInput->False],
+   Manipulate`InterpretManipulate[1]],
+  DynamicModuleValues:>{}]], "Output",
+ CellChangeTimes->{3.996299971697176*^9, 3.9963000414539776`*^9, 
+  3.996300100304556*^9, 3.996300160632723*^9, 3.996730685259117*^9},
+ CellLabel->"Out[1]=",ExpressionUUID->"5d74e19a-aeaa-3d4c-a6f2-cba6719a1f2c"]
+}, Open  ]]
+},
+WindowSize->{1141.2, 574.8},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1. Inherited,
+FrontEndVersion->"14.3 for Microsoft Windows (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"2051abfa-3d44-764c-b8bb-97676e4e9ed2"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 20418, 481, 1082, "Input",ExpressionUUID->"c04f8eb5-5d76-8740-8f36-16f6e86e57f6"],
+Cell[20997, 505, 13137, 245, 878, "Output",ExpressionUUID->"5d74e19a-aeaa-3d4c-a6f2-cba6719a1f2c"]
+}, Open  ]]
+}
+]
+*)
+
